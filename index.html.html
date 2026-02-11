@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Modak ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: radial-gradient(circle at top,#ff9a9e,#fad0c4);
+    overflow:hidden;
+    color:white;
+}
+
+/* floating hearts */
+.bg-hearts span{
+    position:absolute;
+    font-size:22px;
+    animation: floatUp linear infinite;
+    opacity:0.6;
+}
+@keyframes floatUp{
+    from{transform:translateY(100vh);}
+    to{transform:translateY(-10vh);}
+}
+
+/* card */
+.card{
+    position:relative;
+    width:90%;
+    max-width:520px;
+    backdrop-filter: blur(16px);
+    background: rgba(255,255,255,0.18);
+    border-radius:30px;
+    padding:45px 35px 55px;
+    text-align:center;
+    box-shadow:0 0 45px rgba(255,255,255,0.45);
+}
+
+.emoji{
+    font-size:72px;
+    animation:bounce 2s infinite;
+}
+@keyframes bounce{
+    50%{transform:translateY(-10px);}
+}
+
+h1{
+    margin-top:18px;
+    font-size:2.3rem;
+    text-shadow:0 0 12px white;
+}
+
+.sub{
+    margin-top:12px;
+    font-size:1.05rem;
+    opacity:0.9;
+}
+
+.divider{
+    width:60%;
+    height:2px;
+    background:rgba(255,255,255,0.5);
+    margin:25px auto;
+    border-radius:10px;
+}
+
+.buttons{
+    margin-top:20px;
+    position:relative;
+    height:140px;
+}
+
+button{
+    padding:15px 42px;
+    border-radius:40px;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    transition:0.35s ease;
+}
+
+#yes{
+    background:#ff4d6d;
+    color:white;
+    box-shadow:0 0 18px #ff4d6d;
+}
+
+#no{
+    background:white;
+    color:#ff4d6d;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    top:75px;
+}
+
+.hint{
+    margin-top:18px;
+    font-size:0.9rem;
+    opacity:0.85;
+}
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_946d9b9f6b.mp3" type="audio/mp3">
+</audio>
+
+<div class="bg-hearts"></div>
+
+<div class="card">
+    <div id="emoji" class="emoji">🥰💑</div>
+    <h1>Modak, will you be my Valentine?</h1>
+    <div class="sub">I promise unlimited love, laughs & Maggi 🍜</div>
+
+    <div class="divider"></div>
+
+    <div class="buttons">
+        <button id="yes">Yes 💖</button>
+        <button id="no">No</button>
+    </div>
+
+    <div class="hint">(Try pressing “No”… if you can 😏)</div>
+</div>
+
+<script>
+/* hearts */
+for(let i=0;i<30;i++){
+    const s=document.createElement("span");
+    s.innerText=["💖","🌸","💗","✨","💞"][Math.floor(Math.random()*5)];
+    s.style.left=Math.random()*100+"vw";
+    s.style.animationDuration=(6+Math.random()*6)+"s";
+    document.querySelector(".bg-hearts").appendChild(s);
+}
+
+let noCount=0;
+const noBtn=document.getElementById("no");
+const yesBtn=document.getElementById("yes");
+const emoji=document.getElementById("emoji");
+const card=document.querySelector(".card");
+
+const lines=[
+"Are you really sure? 🥺",
+"But I made this for YOU 💝",
+"I’ll share my fries 🍟",
+"I’ll listen to your stories forever 😌",
+"I have chocolates 🍫",
+"Think again, pretty please 🥹",
+"Our kids will laugh at this 😭",
+"I already told my mom 😳",
+"Okay now you’re just teasing 😏",
+"Last no before forever 💍"
+];
+
+// store original size
+const baseWidth = yesBtn.offsetWidth;
+const baseHeight = yesBtn.offsetHeight;
+
+noBtn.addEventListener("click",()=>{
+
+    if(noCount>=10) return;
+
+    noBtn.innerText = lines[noCount];
+    emoji.innerText="😚💞";
+
+    // move NO randomly but safely
+    noBtn.style.left = Math.random()*60 + 20 + "%";
+    noBtn.style.top = Math.random()*60 + 60 + "px";
+
+    noCount++;
+
+    // scale based on area math
+    const scale = 1 + (noCount * 0.25); // smooth growth
+    yesBtn.style.transform = `scale(${scale})`;
+
+    if(noCount === 10){
+        // smooth full takeover
+        yesBtn.style.transition="all 0.6s ease";
+        yesBtn.style.position="fixed";
+        yesBtn.style.top="0";
+        yesBtn.style.left="0";
+        yesBtn.style.transform="none";
+        yesBtn.style.width="100vw";
+        yesBtn.style.height="100vh";
+        yesBtn.style.borderRadius="0";
+        yesBtn.style.fontSize="3rem";
+        yesBtn.innerText="YES 💖 YES 💖 YES 💖";
+        yesBtn.style.zIndex="9999";
+        noBtn.style.display="none";
+    }
+});
+
+yesBtn.addEventListener("click",()=>{
+    document.body.innerHTML=`
+    <div style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+    background:linear-gradient(135deg,#ff758c,#ff7eb3);color:white;text-align:center;padding:30px;overflow:auto;">
+
+    <div style="font-size:90px;">🤗💋💖</div>
+
+    <h1 style="font-size:3.4rem;text-shadow:0 0 25px white;">She said YESSSS!!!</h1>
+
+    <div style="max-width:850px;margin-top:30px;
+    background:rgba(255,255,255,0.2);
+    padding:40px;border-radius:30px;
+    box-shadow:0 0 45px white;
+    line-height:1.8;font-size:1.35rem;">
+
+    <p>
+    Thank you for choosing me — today, tomorrow, and always, my cutie Modak 🥹💖<br><br>
+    I promise to love you loudly, protect you fiercely, and annoy you endlessly 😌<br><br>
+    Unlimited hugs 🤗, kisses 💋, silly fights, late night talks,
+    and a lifetime of memories await us 🌸<br><br>
+    You are my Valentine, my comfort, my safe place, and my forever ❤️<br><br>
+    <strong>Happy Valentine’s Day, my beautiful Modak ✨</strong>
+    </p>
+
+    </div>
+    </div>
+    `;
+});
+</script>
+
+
+
+</body>
+</html>
+
